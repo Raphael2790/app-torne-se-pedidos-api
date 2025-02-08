@@ -5,9 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMinimalApiServices();
 
+builder.Services.ConfigureSwagger();
+
 var app = builder.Build();
 
 app.ConfigureApp();
+
+app.UseSwaggerInterface();
 
 app.MapEndpoints();
 

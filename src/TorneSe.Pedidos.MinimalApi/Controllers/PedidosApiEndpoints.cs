@@ -6,7 +6,9 @@ public static class PedidosApiController
 {
     public static void MapEndpoints(this IEndpointRouteBuilder app)
     {
-         var pedidosGroup = app.MapGroup("api/pedidos")
+        app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
+
+        var pedidosGroup = app.MapGroup("api/pedidos")
             .WithTags("Pedidos");
 
         pedidosGroup.MapGet("/", () => new[] { "Pedido 1", "Pedido 2", "Pedido 3" });

@@ -1,4 +1,4 @@
-using TorneSe.Pedidos.MinimalApi.Extensions;
+namespace TorneSe.Pedidos.MinimalApi.Extensions;
 
 public static class ConfigureAppExtensions
 {
