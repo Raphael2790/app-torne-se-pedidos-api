@@ -1,3 +1,4 @@
+using Amazon.DynamoDBv2;
 using Amazon.SQS;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using TorneSe.Pedidos.MinimalApi.Abstracoes.Infraestrutura;
@@ -18,6 +19,7 @@ public static class DependencyInjectionExtensions
         services.AddControllers();
         services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
         services.TryAddScoped<IDbService, DbService>();
+        services.TryAddScoped<IAmazonDynamoDB, AmazonDynamoDBClient>();
         services.TryAddScoped<IAmazonSQS, AmazonSQSClient>();
         services.TryAddScoped<IMessageService, MessageService>();
 

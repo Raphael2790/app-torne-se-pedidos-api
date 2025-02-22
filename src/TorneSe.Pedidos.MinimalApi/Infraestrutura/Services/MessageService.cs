@@ -6,7 +6,7 @@ using TorneSe.Pedidos.MinimalApi.Abstracoes.Infraestrutura;
 
 namespace TorneSe.Pedidos.MinimalApi.Infraestrutura.Services;
 
-public sealed class MessageService(ILogger<MessageService> logger, AmazonSQSClient sqsClient) : IMessageService
+public sealed class MessageService(ILogger<MessageService> logger, IAmazonSQS sqsClient) : IMessageService
 {
     public async Task<bool> SendAsync<T>(T message, string queueUrl) where T : Message
     {

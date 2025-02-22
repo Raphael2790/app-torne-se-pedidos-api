@@ -1,0 +1,118 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Provisiona uma API Serverless com AWS Lambda, API Gateway e Role IAM."
+
+Resources:
+
+  # 🔹 Criando a Role IAM para a Lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: torne-se-pedidos-minimal-api-cloudformation-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 
+                - lambda.amazonaws.com
+            Action: 
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: torne-se-pedidos-minimal-api-cloudformation-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "arn:aws:logs:*:*:*"
+              - Effect: Allow
+                Action:
+                  - "dynamodb:PutItem"
+                  - "dynamodb:GetItem"
+                  - "dynamodb:Scan"
+                  - "dynamodb:Query"
+                  - "dynamodb:UpdateItem"
+                  - "dynamodb:DeleteItem"
+                Resource: "arn:aws:dynamodb:*:*:*"
+              - Effect: Allow
+                Action:
+                  - "sqs:SendMessage"
+                  - "sqs:ReceiveMessage"
+                  - "sqs:DeleteMessage"
+                  - "sqs:GetQueueAttributes"
+                Resource: "arn:aws:sqs:*:*:*"
+
+  # 🔹 Criando a Função Lambda
+  MinhaApiLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: "torne-se-pedidos-minimal-api"
+      Runtime: dotnet8
+      Handler: "TorneSe.Pedidos.MinimalApi"
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: "torne-se-pedidos-minimal-api-cloudformation"  # 🔹 Substitua pelo bucket onde está o ZIP
+        S3Key: "TorneSe.Pedidos.MinimalApi.zip"
+      MemorySize: 512
+      Timeout: 30
+      Architectures:
+        - x86_64
+
+  # 🔹 Criando o API Gateway HTTP
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: "torne-se-pedidos-api-gateway"
+      Description: "API Gateway REST para a Lambda"
+      EndpointConfiguration:
+        Types: 
+          - REGIONAL
+
+
+   # 🔹 Criando o Recurso `{proxy+}` para suportar qualquer rota
+  ApiGatewayResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ParentId: !GetAtt ApiGateway.RootResourceId
+      PathPart: "{proxy+}"
+
+   # 🔹 Criando o Método ANY para o recurso `{proxy+}`
+  ApiGatewayMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ApiGateway
+      ResourceId: !Ref ApiGatewayResource
+      HttpMethod: ANY
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MinhaApiLambda.Arn}/invocations"
+          - { LambdaFunction: !GetAtt MinhaApiLambda.Arn }
+
+  # 🔹 Criando o Stage para a API
+  ApiGatewayDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: ApiGatewayMethod
+    Properties:
+      RestApiId: !Ref ApiGateway
+      StageName: "prod"
+
+   # 🔹 Permitir que a API Gateway invoque a Lambda
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !Ref MinhaApiLambda
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGateway}/*/*/{proxy+}"
+
+Outputs:
+  ApiGatewayUrl:
+    Description: "URL do API Gateway para acessar a Lambda"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod"
