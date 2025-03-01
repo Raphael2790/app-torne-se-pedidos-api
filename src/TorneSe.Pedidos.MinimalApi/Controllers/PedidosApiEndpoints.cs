@@ -1,57 +1,40 @@
 using TorneSe.Pedidos.MinimalApi.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
+using TorneSe.Pedidos.MinimalApi.Common;
+using TorneSe.Pedidos.MinimalApi.UseCases.CriarPedido.Response;
+using TorneSe.Pedidos.MinimalApi.UseCases.CriarPedido.Request;
+using MediatR;
 
 namespace TorneSe.Pedidos.MinimalApi.Controllers;
 
 public static class PedidosApiController
 {
-    public static void MapEndpoints(this IEndpointRouteBuilder app)
+    public static void MapEndpoints(this IEndpointRouteBuilder app, IConfiguration configuration)
     {
-        app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
+        var swaggerUrl = configuration.GetValue<string>("Swagger:Url");
+
+        app.MapGet("/", () => Results.Redirect(swaggerUrl!)).ExcludeFromDescription();
 
         var pedidosGroup = app.MapGroup("api/pedidos")
             .WithTags("Pedidos");
 
-        pedidosGroup.MapGet("/", GetAllPedidos);
+        pedidosGroup.MapGet("/", () => new[] { "Pedido 1", "Pedido 2", "Pedido 3" });
 
-        pedidosGroup.MapGet("/{id}", GetPedidoById);
+        pedidosGroup.MapGet("/{id}", (int id) => $"Pedido {id}");
 
-        pedidosGroup.MapPost("/", CreatePedido);
-
-        pedidosGroup.MapDelete("/{id}", DeletePedido);
-    }
-
-    private static IResult GetAllPedidos()
-    {
-        var pedidos = new[] { "Pedido 1", "Pedido 2", "Pedido 3" };
-        return Results.Ok(pedidos);
-    }
-
-    private static IResult GetPedidoById(int id)
-    {
-        if (id <= 0)
+        pedidosGroup.MapPost("/", async Task<Results<Ok<Result<CriarPedidoResponse>>, BadRequest<Result<CriarPedidoResponse>>>> ([FromServices] IMediator mediator,[FromBody] CriarPedidoRequest request) =>
         {
-            return Results.BadRequest("Invalid ID");
-        }
-        return Results.Ok($"Pedido {id}");
-    }
+            var result = await mediator.Send(request);
 
-    private static IResult CreatePedido([FromBody] Pedido pedido)
-    {
-        if (pedido == null)
-        {
-            return Results.BadRequest("Pedido is required");
-        }
-        pedido.Id = 4;
-        return Results.Created($"/api/pedidos/{pedido.Id}", pedido);
-    }
+            if (result.IsSuccess)
+            {
+                return TypedResults.Ok(result);
+            }
 
-    private static IResult DeletePedido(int id)
-    {
-        if (id <= 0)
-        {
-            return Results.BadRequest("Invalid ID");
-        }
-        return Results.Ok($"Pedido {id} deletado");
+            return TypedResults.BadRequest(result);
+        });
+
+        pedidosGroup.MapDelete("/{id}", (int id) => $"Pedido {id} deletado");
     }
 }

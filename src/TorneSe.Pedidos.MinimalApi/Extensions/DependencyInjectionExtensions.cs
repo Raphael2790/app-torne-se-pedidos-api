@@ -1,3 +1,4 @@
+using System.Reflection;
 using Amazon.DynamoDBv2;
 using Amazon.SQS;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -22,6 +23,10 @@ public static class DependencyInjectionExtensions
         services.TryAddScoped<IAmazonDynamoDB, AmazonDynamoDBClient>();
         services.TryAddScoped<IAmazonSQS, AmazonSQSClient>();
         services.TryAddScoped<IMessageService, MessageService>();
+
+        services.AddMediatR(cfg => {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        });
 
         return services;
     }

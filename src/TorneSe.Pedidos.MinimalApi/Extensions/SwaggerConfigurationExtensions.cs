@@ -45,12 +45,15 @@ public static class SwaggerConfigurationExtensions
         return services;
     }
 
-    public static WebApplication UseSwaggerInterface(this WebApplication app)
+    public static WebApplication UseSwaggerInterface(this WebApplication app, IConfiguration configuration)
     {
         app.UseSwagger();
+
+        var swaggerUrl = configuration.GetValue<string>("Swagger:Url");
+
         app.UseSwaggerUI(options => 
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API com AWS Lambda");
+            options.SwaggerEndpoint(swaggerUrl, "Minha API com AWS Lambda");
         });
 
         return app;

@@ -1,0 +1,53 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        // 1) Executa sua Minimal API diretamente (similar a "commandName": "Project")
+        "name": "Run ASP.NET Core",
+        "type": "coreclr",
+        "request": "launch",
+        // Tarefa de build (no arquivo .vscode/tasks.json) que compila o projeto
+        "preLaunchTask": "build",
+        // Caminho do DLL de saída do build (ajuste se seu caminho for diferente)
+        "program": "${workspaceFolder}/src/TorneSe.Pedidos.MinimalApi/bin/Debug/net8.0/TorneSe.Pedidos.MinimalApi.dll",
+        // Se quiser passar URLs como no applicationUrl do launchSettings:
+        // você poderia definir "ASPNETCORE_URLS" via env, por exemplo:
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development",
+          "ASPNETCORE_URLS": "https://localhost:60365;http://localhost:60366"
+        },
+        // Diretório de trabalho (onde fica o .csproj ou onde você executa a app)
+        "cwd": "${workspaceFolder}/src/TorneSe.Pedidos.MinimalApi",
+        // Exibir logs de execução no terminal integrado do VS Code
+        "console": "integratedTerminal",
+        // Se quiser parar na primeira instrução, mude para true
+        "stopAtEntry": false
+      },
+      {
+        // 2) Executa a Mock Lambda Test Tool (similar a "commandName": "Executable")
+        "name": "Mock Lambda Test Tool",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        // Caminho do executável da Lambda Test Tool
+        // No Windows, use a variável de ambiente com barra invertida ou invertida dupla.
+        // Exemplo genérico: "%USERPROFILE%/.dotnet/tools/dotnet-lambda-test-tool-8.0.exe"
+        // Para compatibilidade com JSON e caminhos, costumo usar "/" mesmo no Windows, 
+        // mas pode usar "\\" se necessário.
+        "program": "${env:USERPROFILE}/.dotnet/tools/dotnet-lambda-test-tool-8.0.exe",
+        // Argumentos que você quer passar (porta, etc.)
+        "args": [
+          "--port",
+          "5050"
+        ],
+        // Working directory apontando para a pasta onde o Lambda Tool espera encontrar os assemblies
+        "cwd": "${workspaceFolder}/src/TorneSe.Pedidos.MinimalApi/bin/Debug/net8.0",
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "console": "integratedTerminal",
+        "stopAtEntry": false
+      }
+    ]
+  }
+  

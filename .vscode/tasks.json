@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build",
+        "type": "shell",
+        "command": "dotnet",
+        "args": [
+          "build",
+          // Ajuste o caminho do seu .csproj se necessário:
+          "${workspaceFolder}\\src\\TorneSe.Pedidos.MinimalApi\\TorneSe.Pedidos.MinimalApi.csproj"
+        ],
+        // "problemMatcher" ajuda o VS Code a identificar erros/avisos e realçá-los.
+        "problemMatcher": "$msCompile"
+      }
+    ]
+  }
+  

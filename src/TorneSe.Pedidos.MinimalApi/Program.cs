@@ -11,8 +11,8 @@ var app = builder.Build();
 
 app.ConfigureApp();
 
-app.UseSwaggerInterface();
+app.UseSwaggerInterface(builder.Configuration);
 
-app.MapEndpoints();
+app.MapEndpoints(builder.Configuration);
 
 app.Run();

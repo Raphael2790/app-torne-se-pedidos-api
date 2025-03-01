@@ -1,0 +1,31 @@
+# Exemplo de GET
+GET https://8qam906j6h.execute-api.us-east-1.amazonaws.com/prod/api/pedidos/18171616
+Accept: application/json
+
+###
+
+# Exemplo de POST
+POST https://8qam906j6h.execute-api.us-east-1.amazonaws.com/prod/api/pedidos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "string",
+  "email": "string",
+  "telefone": "string",
+  "logradouro": "string",
+  "numero": "string",
+  "complemento": "string",
+  "bairro": "string",
+  "cidade": "string",
+  "estado": "string",
+  "cep": "string",
+  "itens": [
+    {
+      "nome": "string",
+      "valor": 0,
+      "quantidade": 0,
+      "idProduto": 0
+    }
+  ]
+}
