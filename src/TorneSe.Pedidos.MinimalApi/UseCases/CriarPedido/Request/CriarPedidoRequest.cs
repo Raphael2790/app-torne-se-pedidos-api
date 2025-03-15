@@ -6,6 +6,7 @@ namespace TorneSe.Pedidos.MinimalApi.UseCases.CriarPedido.Request;
 
 public class CriarPedidoRequest : IRequest<Result<CriarPedidoResponse>>
 {
+    public Guid IdCliente { get; set; }
     public string Nome { get; set; }
     public string Email { get; set; }
     public string Telefone { get; set; }
@@ -21,7 +22,7 @@ public class CriarPedidoRequest : IRequest<Result<CriarPedidoResponse>>
 
 public class PedidoItemRequest
 {
-    public string Nome { get; set; }
+    public string NomeProduto { get; set; }
     public decimal Valor { get; set; }
     public int Quantidade { get; set; }
     public int IdProduto { get; set; }

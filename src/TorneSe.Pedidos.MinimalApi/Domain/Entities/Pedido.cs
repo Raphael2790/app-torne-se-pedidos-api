@@ -1,11 +1,13 @@
+using TorneSe.Pedidos.MinimalApi.Domain.Enums;
+
 namespace TorneSe.Pedidos.MinimalApi.Domain.Entities;
 
-public class Pedido
+public sealed class Pedido : Entity
 {
-    public int Id { get; set; }
-    public string Nome { get; set; }
-    public string Email { get; set; }
-    public string Telefone { get; set; }
-    public string Produto { get; set; }
-    public decimal Valor { get; set; }
+    public Cliente Cliente { get; set; }
+    public DateTime DataPedido { get; set; }
+    public StatusPedido Status { get; set; }
+    public PedidoItem[] Itens { get; set; } = [];
+    public decimal ValorTotal => Itens.Sum(i => i.Total);
+    public Endereco EnderecoEntrega { get; set; }
 }

@@ -1,4 +1,3 @@
-using TorneSe.Pedidos.MinimalApi.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using TorneSe.Pedidos.MinimalApi.Common;

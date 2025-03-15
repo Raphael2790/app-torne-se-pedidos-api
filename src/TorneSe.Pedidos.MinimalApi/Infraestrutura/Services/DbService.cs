@@ -4,18 +4,9 @@ using TorneSe.Pedidos.MinimalApi.Abstracoes.Infraestrutura;
 
 namespace TorneSe.Pedidos.MinimalApi.Infraestrutura.Services;
 
-public class DbService : IDbService
+public class DbService(ILogger<DbService> logger, IAmazonDynamoDB dynamoDb) : IDbService
 {
-    private readonly ILogger<DbService> _logger;
-    private readonly IAmazonDynamoDB _dynamoDb;
-    private readonly DynamoDBContext _dbContext;
-
-    public DbService(ILogger<DbService> logger, IAmazonDynamoDB dynamoDb)
-    {
-        _logger = logger;
-        _dynamoDb = dynamoDb;
-        _dbContext = new DynamoDBContext(dynamoDb);
-    }
+    private readonly DynamoDBContext _dbContext = new(dynamoDb);
 
     public async Task<bool> SaveAsync<T>(T entity)
     {
@@ -26,7 +17,7 @@ public class DbService : IDbService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao salvar entidade no DynamoDB");
+            logger.LogError(ex, "Erro ao salvar entidade no DynamoDB");
             return false;
         }
     }
