@@ -15,6 +15,8 @@ public sealed class Handler(ILogger<Handler> logger, IMapper mapper, IDbService 
 {
     public async Task<Result<CriarPedidoResponse>> Handle(CriarPedidoRequest request, CancellationToken cancellationToken)
     {
+        throw new NotImplementedException();
+
         var pedido = mapper.Map<Pedido>(request);
 
         //Validação de regras de negócio do pedido

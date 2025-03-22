@@ -15,4 +15,6 @@ public static class AppConstants
     };
 
     public static JsonSerializerOptions JsonSerializerOptions => _jsonSerializerOptions;
+
+    public const string MessageServiceSectionName = "Sqs";
 }

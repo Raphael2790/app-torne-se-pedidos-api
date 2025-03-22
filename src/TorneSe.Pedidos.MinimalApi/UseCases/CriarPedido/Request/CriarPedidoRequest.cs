@@ -25,5 +25,5 @@ public class PedidoItemRequest
     public string NomeProduto { get; set; }
     public decimal Valor { get; set; }
     public int Quantidade { get; set; }
-    public int IdProduto { get; set; }
+    public int IdSku { get; set; }
 }

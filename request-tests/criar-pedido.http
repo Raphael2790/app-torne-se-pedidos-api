@@ -25,7 +25,7 @@ Accept: application/json
       "nome": "string",
       "valor": 0,
       "quantidade": 0,
-      "idProduto": 0
+      "idSku": 0
     }
   ]
 }

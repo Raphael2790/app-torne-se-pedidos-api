@@ -6,5 +6,5 @@ public sealed class PedidoItem
     public decimal Valor { get; set; }
     public int Quantidade { get; set; }
     public decimal Total => Valor * Quantidade;
-    public int IdProduto { get; set; }
+    public int IdSku { get; set; }
 }

@@ -1,4 +1,4 @@
-using Amazon.SQS.Model;
+using TorneSe.Pedidos.MinimalApi.Domain.Messages;
 
 namespace TorneSe.Pedidos.MinimalApi.Abstracoes.Infraestrutura;
 

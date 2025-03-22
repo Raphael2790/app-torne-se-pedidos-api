@@ -1,8 +1,8 @@
 using System.Net;
 using System.Text.Json;
 using Amazon.SQS;
-using Amazon.SQS.Model;
 using TorneSe.Pedidos.MinimalApi.Abstracoes.Infraestrutura;
+using TorneSe.Pedidos.MinimalApi.Domain.Messages;
 
 namespace TorneSe.Pedidos.MinimalApi.Infraestrutura.Services;
 
@@ -12,7 +12,7 @@ public sealed class MessageService(ILogger<MessageService> logger, IAmazonSQS sq
     {
         try
         {
-            var request = new SendMessageRequest
+            var request = new Amazon.SQS.Model.SendMessageRequest
             {
                 QueueUrl = queueUrl,
                 MessageBody = JsonSerializer.Serialize(message)

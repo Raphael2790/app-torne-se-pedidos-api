@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace TorneSe.Pedidos.MinimalApi.Domain.Messages;
 
-public abstract class Message
+public abstract class Message : INotification
 {
     public Guid Id { get; set; }
     public DateTime Timestamp { get; set; }
