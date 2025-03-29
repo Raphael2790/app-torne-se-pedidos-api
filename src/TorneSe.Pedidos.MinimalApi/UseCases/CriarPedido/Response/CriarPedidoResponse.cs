@@ -6,5 +6,5 @@ public class CriarPedidoResponse
 {
     public Guid Id { get; set; }
     public DateTime DataPedido { get; set; }
-    public StatusPedido StatusPedido { get; set; }
+    public StatusPedido Status { get; set; }
 }

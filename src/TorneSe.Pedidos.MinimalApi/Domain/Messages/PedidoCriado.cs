@@ -7,5 +7,5 @@ public sealed class PedidoCriado : Message
     public DateTime DataPedido { get; set; }
     public string PedidoCompleto { get; set; }
     public decimal ValorTotal { get; set; }
-    public StatusPedido StatusPedido { get; set; }
+    public StatusPedido Status { get; set; }
 }

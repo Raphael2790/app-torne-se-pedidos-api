@@ -10,13 +10,11 @@ using TorneSe.Pedidos.MinimalApi.UseCases.CriarPedido.Response;
 
 namespace TorneSe.Pedidos.MinimalApi.UseCases.CriarPedido;
 
-public sealed class Handler(ILogger<Handler> logger, IMapper mapper, IDbService dbService, IMediator mediator) 
+public sealed class Handler(ILogger<Handler> logger, IMapper mapper, IDbService dbService, IMediator mediator)
     : IRequestHandler<CriarPedidoRequest, Result<CriarPedidoResponse>>
 {
     public async Task<Result<CriarPedidoResponse>> Handle(CriarPedidoRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-
         var pedido = mapper.Map<Pedido>(request);
 
         //Validação de regras de negócio do pedido
