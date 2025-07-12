@@ -22,6 +22,9 @@ public class AutoMapperProfile : Profile
         CreateMap<PedidoItemRequest, PedidoItem>()
             .ReverseMap();
 
+        CreateMap<PedidoFormaPagamentoRequest, FormaPagamento>()
+            .ReverseMap();
+
         CreateMap<CriarPedidoRequest, Pedido>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
             .ForMember(dest => dest.DataPedido, opt => opt.MapFrom(src => DateTime.UtcNow))
@@ -55,16 +58,17 @@ public class AutoMapperProfile : Profile
                 Cep = src.Cep
             }));
 
-         CreateMap<Pedido, PedidoDynamoModel>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
-            .ForMember(dest => dest.DataPedido, opt => opt.MapFrom(src => src.DataPedido.ToString("yyyy-MM-dd")))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
-            .ForMember(dest => dest.PedidoCompleto, opt => opt.MapFrom(src => JsonSerializer.Serialize(src, AppConstants.JsonSerializerOptions)));
-        
-         CreateMap<Pedido, PedidoCriado>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.PedidoCompleto, opt => opt.MapFrom(src => JsonSerializer.Serialize(src, AppConstants.JsonSerializerOptions)));
+        CreateMap<Pedido, PedidoDynamoModel>()
+           .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
+           .ForMember(dest => dest.DataPedido, opt => opt.MapFrom(src => src.DataPedido.ToString("yyyy-MM-dd")))
+           .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+           .ForMember(dest => dest.PedidoCompleto, opt => opt.MapFrom(src => JsonSerializer.Serialize(src, AppConstants.JsonSerializerOptions)));
 
-         CreateMap<PedidoCriado, CriarPedidoResponse>();
+        CreateMap<Pedido, PedidoCriado>()
+            .ForMember(dest => dest.PedidoId, opt => opt.MapFrom(src => src.Id.ToString()))
+            .ForMember(dest => dest.DataPedido, opt => opt.MapFrom(src => src.DataPedido.ToString("yyyy-MM-dd")))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
+        CreateMap<PedidoCriado, CriarPedidoResponse>();
     }
 }

@@ -1,6 +1,6 @@
 namespace TorneSe.Pedidos.MinimalApi.Domain.Entities;
 
-public sealed class PedidoItem
+public sealed class PedidoItem : Entity
 {
     public string NomeProduto { get; set; }
     public decimal Valor { get; set; }

@@ -18,6 +18,7 @@ public class CriarPedidoRequest : IRequest<Result<CriarPedidoResponse>>
     public string Estado { get; set; }
     public string Cep { get; set; }
     public List<PedidoItemRequest> Itens { get; set; }
+    public List<PedidoFormaPagamentoRequest> FormasPagamento { get; set; }
 }
 
 public class PedidoItemRequest
@@ -26,4 +27,17 @@ public class PedidoItemRequest
     public decimal Valor { get; set; }
     public int Quantidade { get; set; }
     public int IdSku { get; set; }
+}
+
+
+public class PedidoFormaPagamentoRequest
+{
+    public string Tipo { get; set; }
+    public decimal Valor { get; set; }
+    public int Parcelas { get; set; }
+    public string TokenCartao { get; set; }
+    public string Bandeira { get; set; }
+    public string ChavePix { get; set; }
+    public string TipoChavePix { get; set; }
+    public string ComprovantePix { get; set; }
 }

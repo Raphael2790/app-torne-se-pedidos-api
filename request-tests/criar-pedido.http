@@ -10,22 +10,113 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nome": "string",
-  "email": "string",
-  "telefone": "string",
-  "logradouro": "string",
-  "numero": "string",
-  "complemento": "string",
-  "bairro": "string",
-  "cidade": "string",
-  "estado": "string",
-  "cep": "string",
+  "nome": "Maria Silva",
+  "email": "maria.silva@email.com",
+  "telefone": "(11) 98765-4321",
+  "logradouro": "Avenida Paulista",
+  "numero": "1578",
+  "complemento": "Apto 42, Bloco B",
+  "bairro": "Bela Vista",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "cep": "01310-200",
   "itens": [
     {
-      "nome": "string",
-      "valor": 0,
-      "quantidade": 0,
-      "idSku": 0
+      "nome": "Smartphone Galaxy S23",
+      "valor": 3499.90,
+      "quantidade": 1,
+      "idSku": 1089745
+    },
+    {
+      "nome": "Carregador USB-C 25W",
+      "valor": 149.90,
+      "quantidade": 2, 
+      "idSku": 2067382
+    },
+    {
+      "nome": "Película de Proteção",
+      "valor": 59.90,
+      "quantidade": 1,
+      "idSku": 3054921
+    }
+  ],
+  "formasPagamento": [
+    {
+      "tipo": "cartao_credito",
+      "valor": 2500.00,
+      "parcelas": 3,
+      "tokenCartao": "eyJhbGciOiJIUzI1NiJ9.eyJjYXJ0YW8iOiI1NDMyMTA5ODc2NTQzMjEwIiwibm9tZSI6Ik1BUklBIEwgU0lMVkEiLCJ2YWxpZGFkZSI6IjEyLzIwMjYifQ.zKphdZ3DhA5SGt3vF7a_RDZdy0jGh6Gq57GFpRHsNAA",
+      "bandeira": "mastercard"
+    },
+    {
+      "tipo": "pix",
+      "valor": 1359.60,
+      "chavePix": "71.238.766/0001-90",
+      "tipoChavePix": "cnpj",
+      "comprovantePix": "E7886453278ABF88909"
+    }
+  ]
+}
+###
+
+@baseUrlLocal = https://localhost:60365
+
+# Exemplo de GET
+GET {{baseUrlLocal}}/api/pedidos/18171616
+Accept: application/json
+
+###
+
+# Exemplo de POST
+POST https://localhost:60365/api/pedidos
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Maria Silva",
+  "email": "maria.silva@email.com",
+  "telefone": "(11) 98765-4321",
+  "logradouro": "Avenida Paulista",
+  "numero": "1578",
+  "complemento": "Apto 42, Bloco B",
+  "bairro": "Bela Vista",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "cep": "01310-200",
+  "itens": [
+    {
+      "nome": "Smartphone Galaxy S23",
+      "valor": 3499.90,
+      "quantidade": 1,
+      "idSku": 1089745
+    },
+    {
+      "nome": "Carregador USB-C 25W",
+      "valor": 149.90,
+      "quantidade": 2, 
+      "idSku": 2067382
+    },
+    {
+      "nome": "Película de Proteção",
+      "valor": 59.90,
+      "quantidade": 1,
+      "idSku": 3054921
+    }
+  ],
+  "formasPagamento": [
+    {
+      "tipo": "cartao_credito",
+      "valor": 2500.00,
+      "parcelas": 3,
+      "tokenCartao": "eyJhbGciOiJIUzI1NiJ9.eyJjYXJ0YW8iOiI1NDMyMTA5ODc2NTQzMjEwIiwibm9tZSI6Ik1BUklBIEwgU0lMVkEiLCJ2YWxpZGFkZSI6IjEyLzIwMjYifQ.zKphdZ3DhA5SGt3vF7a_RDZdy0jGh6Gq57GFpRHsNAA",
+      "bandeira": "mastercard"
+    },
+    {
+      "tipo": "pix",
+      "valor": 1359.60,
+      "chavePix": "71.238.766/0001-90",
+      "tipoChavePix": "cnpj",
+      "comprovantePix": "E7886453278ABF88909"
     }
   ]
 }

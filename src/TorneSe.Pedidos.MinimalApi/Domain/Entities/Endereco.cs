@@ -1,6 +1,6 @@
 namespace TorneSe.Pedidos.MinimalApi.Domain.Entities;
 
-public sealed class Endereco
+public sealed class Endereco : Entity
 {
     public string Logradouro { get; set; }
     public string Numero { get; set; }
