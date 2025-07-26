@@ -22,19 +22,19 @@ Accept: application/json
   "cep": "01310-200",
   "itens": [
     {
-      "nome": "Smartphone Galaxy S23",
+      "nomeProduto": "Smartphone Galaxy S23",
       "valor": 3499.90,
       "quantidade": 1,
       "idSku": 1089745
     },
     {
-      "nome": "Carregador USB-C 25W",
+      "nomeProduto": "Carregador USB-C 25W",
       "valor": 149.90,
       "quantidade": 2, 
       "idSku": 2067382
     },
     {
-      "nome": "Película de Proteção",
+      "nomeProduto": "Película de Proteção",
       "valor": 59.90,
       "quantidade": 1,
       "idSku": 3054921
@@ -85,19 +85,19 @@ Accept: application/json
   "cep": "01310-200",
   "itens": [
     {
-      "nome": "Smartphone Galaxy S23",
+      "nomeProduto": "Smartphone Galaxy S23",
       "valor": 3499.90,
       "quantidade": 1,
       "idSku": 1089745
     },
     {
-      "nome": "Carregador USB-C 25W",
+      "nomeProduto": "Carregador USB-C 25W",
       "valor": 149.90,
       "quantidade": 2, 
       "idSku": 2067382
     },
     {
-      "nome": "Película de Proteção",
+      "nomeProduto": "Película de Proteção",
       "valor": 59.90,
       "quantidade": 1,
       "idSku": 3054921
